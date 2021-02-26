@@ -1,8 +1,4 @@
 # Grafika3d
 Grafika 3d i animacja komputerowa - kółko
 
-W każdym folderze znajduje się osobny projekt
-oraz materiały jakie użyłem do jego stworzenia.
-Ponadto można tam również znaleźć pliki "readme.md"
-w których znajdują się bardziej szczegółowe informacje
-na temat projektów.
+# https://grafika3d-2020.github.io/grafika3d-wprowadzenie-01-MichaelMusiol1/
