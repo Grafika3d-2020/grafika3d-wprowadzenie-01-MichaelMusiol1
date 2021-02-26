@@ -42,7 +42,7 @@ const colorWhite = new THREE.Color('rgb(255, 255, 255)')
 
 
 const width = 20;
-const height= 20;
+const height= 120;
 const depth = 20;
 const cubeGeometry = new THREE.BoxGeometry(width,height,depth);
 const cubeMaterial = new THREE.MeshPhongMaterial({color: colorWhite, shininess:90})
