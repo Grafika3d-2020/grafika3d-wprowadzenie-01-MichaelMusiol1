@@ -66,8 +66,8 @@ cube.rotation.z +=-0.015
 
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.render(scene,camera)
-let controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.addEventListener("change", renderer);
+// let controls = new THREE.OrbitControls(camera, renderer.domElement);
+// controls.addEventListener("change", renderer);
 }
 
 
