@@ -57,7 +57,8 @@ cube.position.z = 0;
 
 
 
-
+let controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.addEventListener("change", renderer);
 const animate = () =>{
 requestAnimationFrame(animate)
 cube.rotation.x +=-0.01
@@ -66,8 +67,7 @@ cube.rotation.z +=-0.015
 
 renderer.setSize( window.innerWidth, window.innerHeight );
 renderer.render(scene,camera)
-let controls = new THREE.OrbitControls(camera, renderer.domElement);
-controls.addEventListener("change", renderer);
+
 }
 
 
