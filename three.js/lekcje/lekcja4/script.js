@@ -1,50 +1,68 @@
-let scene, camera, renderer;
-function init() {
-    scene = new THREE.Scene();
+const renderer = new THREE.WebGLRenderer({
+  antialias: true,
+  alpha: true,
+});
+const scene = new THREE.Scene();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-    camera = new THREE.PerspectiveCamera(55,window.innerWidth/window.innerHeight,45,30000);
-    camera.position.set(-900,-200,-900);
+let geometry = new THREE.TorusGeometry(0.7, 0.2, 16, 90);
 
-    renderer = new THREE.WebGLRenderer({antialias:true});
-    renderer.setSize(window.innerWidth,window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+// loading
+const textureLoader = new THREE.TextureLoader();
+const textura = textureLoader.load('height2.jpg');
 
-    let controls = new THREE.OrbitControls(camera,renderer.domElement);
-    controls.update();
-    controls.minDistance = 500;
-    controls.maxDistance = 1500;
 
-    let materialArray = []
+//Materialy
+const material = new THREE.MeshStandardMaterial();
+material.metalness = 0.5;
+material.roughness = 0.2;
+material.normalMap = textura;
+material.color = new THREE.Color(0xffff00);
 
-    let texture_ft = new THREE.TextureLoader().load('desertdawn_ft.jpg');
-    let texture_bk = new THREE.TextureLoader().load('desertdawn_bk.jpg');
-    let texture_up = new THREE.TextureLoader().load('desertdawn_up.jpg');
-    let texture_dn = new THREE.TextureLoader().load('desertdawn_dn.jpg');
-    let texture_rt = new THREE.TextureLoader().load('desertdawn_rt.jpg');
-    let texture_lf = new THREE.TextureLoader().load('desertdawn_lf.jpg');
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
 
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_ft}));
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_bk}));
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_up}));
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_dn}));
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_rt}));
-    materialArray.push(new THREE.MeshBasicMaterial({map: texture_lf}));
+const pointLight = new THREE.PointLight(0xffffff, 2);
+pointLight.position.x = 2;
+pointLight.position.y = 0;
+pointLight.position.z = 0;
+scene.add(pointLight);
 
-    console.log(materialArray);
+const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
 
-    for(let i=0; i<6; i++){
-        materialArray[i].side = THREE.BackSide;
-    }
+window.addEventListener("resize", () => {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
 
-    let skyboxGeo = new THREE.BoxGeometry( 10000, 10000, 10000);
-    let skybox = new THREE.Mesh( skyboxGeo, materialArray);
-    scene.add( skybox );
-    animate();
-}
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
 
-function animate() {
-    renderer.render(scene,camera);
-    requestAnimationFrame(animate);
-}
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
 
-init();
+const camera = new THREE.PerspectiveCamera(
+  75,
+  sizes.width / sizes.height,
+  0.1,
+  100
+);
+camera.position.set(0, 0, 2);
+camera.lookAt(0, 0, 0);
+scene.add(camera);
+
+clock = new THREE.Clock();
+
+const tick = () => {
+  const elTime = clock.getElapsedTime();
+
+  sphere.rotation.x = 0.5 * elTime;
+
+  renderer.render(scene, camera);
+  window.requestAnimationFrame(tick);
+};
+tick();
