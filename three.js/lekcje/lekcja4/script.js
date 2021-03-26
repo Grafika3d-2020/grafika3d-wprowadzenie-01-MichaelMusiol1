@@ -23,8 +23,11 @@ material.color = new THREE.Color(0xffff00);
 const sphere = new THREE.Mesh(geometry, material);
 scene.add(sphere);
 
-const pointLight = new THREE.PointLight(0xffffff, 2);
-pointLight.position.x = 2;
+const color='black';
+scene.background= new THREE.Color(color);
+
+const pointLight = new THREE.PointLight(0x00ffff, 2);
+pointLight.position.x = 0;
 pointLight.position.y = 0;
 pointLight.position.z = 0;
 scene.add(pointLight);
